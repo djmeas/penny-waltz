@@ -1,0 +1,19 @@
+/* Custom Styles */
+
+/** Global Forms **/
+
+.form-control option {
+  background-color: #1e1e29 !important;
+}
+
+textarea.form-control {
+  resize: auto;
+  max-height: 500px;
+}
+
+/** Global Pages **/
+
+.page-btn-container {
+  margin-bottom: 20px;
+}
+
