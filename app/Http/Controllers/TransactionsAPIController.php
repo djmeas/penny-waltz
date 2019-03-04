@@ -54,10 +54,40 @@ class TransactionsAPIController extends Controller
     	} catch (\Exception $e) {
     		
     		return response([
-    			'msg' => 'Error!  We couldn\'t save your transaction.',
+    			'msg' => 'Error!  We could not save your transaction.',
     			'e' => $e,
     			'postData' => $postData
     		], 400);
+
+    	}
+
+    }
+
+    public function get_recent_transactions($type = null) {
+
+    	try {
+    		
+    		$recent_out = Transaction::where('type_id', -1)->with('UserTransactionCategory')->orderBy('date', 'desc')->limit(5)->get()->toArray();
+    		$recent_in = Transaction::where('type_id', 1)->with('UserTransactionCategory')->orderBy('date', 'desc')->limit(5)->get()->toArray();
+
+    		switch ($type) {
+    			case 'in':
+    				return $recent_in;
+    				break;
+    			case 'out':
+    				return $recent_out;
+    				break;
+    			default:
+    				return [
+    					'in' => $recent_in,
+		    			'out' => $recent_out
+		    		];
+    				break;
+    		}
+
+    	} catch (\Exception $e) {
+    		
+    		return response(['message' => 'Error! We could not fetch your recent transactions.'], 400);
 
     	}
 

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="margin-bottom:20px">
         <!-- Default -->
 		<div v-show="componentState == null" class="page-btn-container">
 			<button @click="componentState = 'add';getUserTransactionCategories();_initForm()"
@@ -14,7 +14,7 @@
             <div class="card-body">
                 
                 <div class="row">
-                    
+
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label>Date <span class="text-danger">*</span></label>
@@ -124,6 +124,7 @@
                 axios.post(Vue.prototype.$apiRoutes.addTransaction.url, this.form).then(response => {
                     Vue.prototype.$flashMessage(response.data.message, 'success');
                     this._initForm();
+                    this.$emit('refreshRecentTransactions');
                 }).catch(error => {
                     //console.log(error.response.data);
                     this.validationMessages = error.response.data.errors;

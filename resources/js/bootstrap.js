@@ -1,6 +1,9 @@
 
 window._ = require('lodash');
 
+// To get Moment.js to work, I had to add it globally!
+window.moment = require('moment');
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This

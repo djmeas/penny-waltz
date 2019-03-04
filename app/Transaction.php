@@ -15,4 +15,10 @@ class Transaction extends Model
         'additional_notes',
         'date'
     );
+
+    // Relationships
+
+    public function UserTransactionCategory() {
+    	return $this->belongsTo(UserTransactionCategory::class, 'category_id', 'id');
+    }
 }

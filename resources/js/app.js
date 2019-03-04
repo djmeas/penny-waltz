@@ -9,6 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+Vue.use(require('vue-moment'));
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -31,6 +33,7 @@ Vue.component('validation-messages', require('./components/helpers/validation_me
 // Transactions
 Vue.component('transactions-page', require('./components/transactions/transactions-page.vue').default);
 Vue.component('transactions-add', require('./components/transactions/transactions-add.vue').default); 
+Vue.component('transactions-recent', require('./components/transactions/transactions-recent.vue').default); 
 
 /**
  * Global / Prototype
@@ -48,6 +51,11 @@ Vue.prototype.$apiRoutes = {
 		title: "Add Transaction",
 		description: "Request to add and save a transaction",
 		url: Vue.prototype.$baseAPI + '/transactions/save'
+	},
+	"getRecentTransactions": {
+		title: "Get Recent Transaction",
+		description: "Fetches a user's recent (last 5) transactions",
+		url: Vue.prototype.$baseAPI + '/transactions/recent'
 	}
 
 }; 
@@ -79,6 +87,11 @@ Vue.prototype.$flashMessage = function flashMessage(message, type) {
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
 }
 
+// Filters
+
+Vue.filter('date_format_mdy', function(value) {
+    return moment(String(value)).format('MM/DD/YY');
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
