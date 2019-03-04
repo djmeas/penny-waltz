@@ -16,6 +16,7 @@ class CreateUserTransactionCategoriesTable extends Migration
         Schema::create('user_transaction_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
+            $table->integer('type_id');
             $table->string('title');
             $table->timestamps();
         });

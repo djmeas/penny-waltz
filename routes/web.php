@@ -36,5 +36,6 @@ Route::get('/vue-demo', 'HomeController@vue_demo')->name('Vue.js Demo');
 Route::prefix('api')->group(function () {
     Route::prefix('transactions')->group(function () {
         Route::get('user_categories', 'TransactionsAPIController@user_categories');
+        Route::post('save', 'TransactionsAPIController@save');
     });
 });

@@ -23,6 +23,7 @@
     <!-- Styles -->
     <link href="{{ asset('black-dashboard/css/black-dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('black-dashboard/css/nucleo-icons.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
@@ -185,6 +186,9 @@
                     </div>
                 </div>
             </footer>
+
+            <div id="snackbar"></div>
+            
         </div>
     </div>
 

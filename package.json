@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "black-dashboard": "^1.0.0",
+        "jquery-ui-bundle": "^1.12.1-migrate",
         "laravel-elixir": "^6.0.0-18"
     }
 }

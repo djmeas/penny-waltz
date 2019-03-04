@@ -12,6 +12,10 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+
+    // To get jQuery UI to work, I had to install this NPM pacakge and not use it from a CDN!
+    require('jquery-ui-bundle');
+    
 } catch (e) {}
 
 /**
