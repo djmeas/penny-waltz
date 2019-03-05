@@ -2119,6 +2119,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -74142,46 +74148,73 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "table-responsive ps" }, [
           _c("table", { staticClass: "table tablesorter" }, [
-            _vm._m(0),
+            _vm.transactions.length > 0
+              ? _c("thead", { staticClass: " text-primary" }, [_vm._m(0)])
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.transactions, function(transaction) {
-                return _c("tr", [
-                  _c("td", [
-                    _vm._v(
-                      "\n\t\t\t\t                    " +
-                        _vm._s(_vm._f("date_format_mdy")(transaction.date)) +
-                        "\n\t\t\t\t                "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      "\n\t\t\t\t                    " +
-                        _vm._s(transaction.user_transaction_category.title) +
-                        "\n\t\t\t\t                "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      "\n\t\t\t\t                    " +
-                        _vm._s(transaction.short_description) +
-                        "\n\t\t\t\t                "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    _vm._v(
-                      "\n\t\t\t\t                    $" +
-                        _vm._s(transaction.amount) +
-                        "\n\t\t\t\t                "
-                    )
-                  ])
-                ])
-              }),
-              0
+              [
+                _vm._l(_vm.transactions, function(transaction) {
+                  return _vm.transactions.length > 0
+                    ? _c("tr", [
+                        _c("td", [
+                          _vm._v(
+                            "\n\t\t\t\t                    " +
+                              _vm._s(
+                                _vm._f("date_format_mdy")(transaction.date)
+                              ) +
+                              "\n\t\t\t\t                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n\t\t\t\t                    " +
+                              _vm._s(
+                                transaction.user_transaction_category.title
+                              ) +
+                              "\n\t\t\t\t                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n\t\t\t\t                    " +
+                              _vm._s(transaction.short_description) +
+                              "\n\t\t\t\t                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(
+                            "\n\t\t\t\t                    $" +
+                              _vm._s(transaction.amount) +
+                              "\n\t\t\t\t                "
+                          )
+                        ])
+                      ])
+                    : _vm._e()
+                }),
+                _vm._v(" "),
+                _vm._l([0, 1, 2, 3, 4], function(x) {
+                  return _c(
+                    "tr",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.transactions.length == 0,
+                          expression: "transactions.length == 0"
+                        }
+                      ]
+                    },
+                    [_vm._m(1, true)]
+                  )
+                })
+              ],
+              2
             )
           ])
         ])
@@ -74194,28 +74227,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: " text-primary" }, [
-      _c("tr", [
-        _c("th", [
-          _vm._v("\n\t\t\t\t                    Date\n\t\t\t\t                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(
-            "\n\t\t\t\t                    Category\n\t\t\t\t                "
-          )
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(
-            "\n\t\t\t\t                    Short Description\n\t\t\t\t                "
-          )
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v("\n\t\t\t\t                \tAmount\n\t\t\t\t                ")
-        ])
+    return _c("tr", [
+      _c("th", [
+        _vm._v("\n\t\t\t\t                    Date\n\t\t\t\t                ")
+      ]),
+      _vm._v(" "),
+      _c("th", [
+        _vm._v(
+          "\n\t\t\t\t                    Category\n\t\t\t\t                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("th", [
+        _vm._v(
+          "\n\t\t\t\t                    Short Description\n\t\t\t\t                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("th", [
+        _vm._v("\n\t\t\t\t                \tAmount\n\t\t\t\t                ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "99" } }, [
+      _c("div", {
+        staticClass: "ph-item",
+        staticStyle: { margin: "0px", padding: "14px" }
+      })
     ])
   }
 ]

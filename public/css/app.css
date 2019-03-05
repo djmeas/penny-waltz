@@ -108,3 +108,30 @@ textarea.form-control {
   margin-bottom: 20px;
 }
 
+/** PH CSS **/
+
+.ph-item {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px 15px 15px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  background-color: #27293d;
+  border: 1px solid #27293d;
+  border-radius: 2px;
+}
+
+.ph-picture {
+  width: 100%;
+  height: 120px;
+  background-color: #40435d;
+  margin-bottom: 15px;
+}
+
+.ph-row div {
+  height: 10px;
+  margin-bottom: 7.5px;
+  background-color: #40435d;
+}
+

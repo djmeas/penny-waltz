@@ -13,6 +13,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/placeholder-loading/dist/css/placeholder-loading.min.css">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -30,10 +32,8 @@
 
 <body class="">
     <div id="app" class="wrapper">
+        @if(Auth::user())
         <div class="sidebar" data="blue">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
-    -->
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="javascript:void(0)" class="simple-text logo-mini">
@@ -66,7 +66,9 @@
                 </ul>
             </div>
         </div>
+        @endif
         <div class="main-panel">
+            @if(Auth::user())
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
                 <div class="container-fluid">
@@ -158,8 +160,9 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- End Navbar -->
-            <div class="content">
+            <div class="content" @if(Auth::guest())style="padding: 100px 50px;"@endif>
                     @yield('content')
             </div>
             <footer class="footer">

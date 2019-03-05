@@ -3,9 +3,10 @@
 		<div class="card">
 			<div class="card-header"><slot></slot></div>
 	        <div class="card-body">
+
 	            <div class="table-responsive ps">
 				    <table class="table tablesorter">
-				        <thead class=" text-primary">
+				        <thead v-if="transactions.length > 0" class=" text-primary">
 				            <tr>
 				                <th>
 				                    Date
@@ -22,7 +23,7 @@
 				            </tr>
 				        </thead>
 				        <tbody>
-				            <tr v-for="transaction in transactions">
+				            <tr v-if="transactions.length > 0" v-for="transaction in transactions">
 				                <td>
 				                    {{transaction.date | date_format_mdy}}
 				                </td>
@@ -34,6 +35,11 @@
 				                </td>
 				                <td class="text-center">
 				                    ${{transaction.amount}}
+				                </td>
+				            </tr>
+				            <tr v-show="transactions.length == 0" v-for="x in [0,1,2,3,4]">
+				            	<td colspan="99">
+				                	<div class="ph-item" style="margin:0px;padding:14px"></div>
 				                </td>
 				            </tr>
 				        </tbody>
