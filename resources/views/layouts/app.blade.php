@@ -31,6 +31,7 @@
 </head>
 
 <body class="">
+
     <div id="app" class="wrapper">
         @if(Auth::user())
         <div class="sidebar" data="blue">
@@ -44,14 +45,18 @@
           </a>
                 </div>
                 <ul class="nav">
-                    <li class="active">
+                    <li class="@if(strpos(Request::fullUrl(), 'home') > 0)
+                        active
+                    @endif">
                         <a href="/home">
                             <i class="tim-icons icon-chart-pie-36"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="/transactions">
+                    <li class="@if(strpos(Request::fullUrl(), 'transactions') > 0)
+                            active
+                        @endif">
+                        <a  href="/transactions">
                             <i class="tim-icons icon-money-coins"></i>
                             <p>Transactions</p>
                         </a>

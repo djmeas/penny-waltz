@@ -44,7 +44,7 @@ var seq2 = 0,
 
  */
 
-(function() {
+/*(function() {
   var isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
   if (isWindows) {
@@ -72,7 +72,7 @@ var seq2 = 0,
   } else {
     $html.addClass('perfect-scrollbar-off');
   }
-})();
+})();*/
 
 $(document).ready(function() {
 

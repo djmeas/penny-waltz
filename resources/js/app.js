@@ -34,6 +34,7 @@ Vue.component('validation-messages', require('./components/helpers/validation_me
 Vue.component('transactions-page', require('./components/transactions/transactions-page.vue').default);
 Vue.component('transactions-add', require('./components/transactions/transactions-add.vue').default); 
 Vue.component('transactions-recent', require('./components/transactions/transactions-recent.vue').default); 
+Vue.component('transactions-all', require('./components/transactions/transactions-all.vue').default); 
 
 /**
  * Global / Prototype
@@ -51,6 +52,11 @@ Vue.prototype.$apiRoutes = {
 		title: "Add Transaction",
 		description: "Request to add and save a transaction",
 		url: Vue.prototype.$baseAPI + '/transactions/save'
+	},
+	"getAllTransactions": {
+		title: "Get All Transaction",
+		description: "Fetches all transactions for a user.",
+		url: Vue.prototype.$baseAPI + '/transactions/all'
 	},
 	"getRecentTransactions": {
 		title: "Get Recent Transaction",

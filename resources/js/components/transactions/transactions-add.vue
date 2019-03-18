@@ -123,8 +123,14 @@
 
                 axios.post(Vue.prototype.$apiRoutes.addTransaction.url, this.form).then(response => {
                     Vue.prototype.$flashMessage(response.data.message, 'success');
-                    this._initForm();
+
+                    // TODO:
+                    // Push individual transaction records into the paginated data
                     this.$emit('refreshRecentTransactions');
+
+                    this._initForm();
+                    //this.$emit('refreshRecentTransactions');
+                    this.componentState = null;
                 }).catch(error => {
                     //console.log(error.response.data);
                     this.validationMessages = error.response.data.errors;

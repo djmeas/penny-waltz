@@ -63,12 +63,45 @@ class TransactionsAPIController extends Controller
 
     }
 
+    public function get_all_transactions(Request $post) {
+
+    	try {
+    		
+    		$transactions = Transaction::query();
+
+	    	$transactions->where('user_id', Auth::user()->id)
+	    		->with('UserTransactionCategory')
+	    		->orderBy('date', 'desc');
+
+	    	return $transactions->paginate(10);
+
+    	} catch (\Exception $e) {
+    		
+    		return response([
+    			'msg' => 'Error!  We could not save your transaction.',
+    			'e' => $e,
+    			//'postData' => $postData
+    		], 400);
+
+    	}
+
+    	
+
+    }
+
     public function get_recent_transactions($type = null) {
 
     	try {
     		
-    		$recent_out = Transaction::where('type_id', -1)->with('UserTransactionCategory')->orderBy('date', 'desc')->limit(5)->get()->toArray();
-    		$recent_in = Transaction::where('type_id', 1)->with('UserTransactionCategory')->orderBy('date', 'desc')->limit(5)->get()->toArray();
+    		$recent_out = Transaction::where('type_id', -1)
+    			->where('user_id', Auth::user()->id)
+    			->with('UserTransactionCategory')
+    			->orderBy('date', 'desc')->limit(5)->get()->toArray();
+
+    		$recent_in = Transaction::where('type_id', 1)
+    			->where('user_id', Auth::user()->id)
+    			->with('UserTransactionCategory')
+    			->orderBy('date', 'desc')->limit(5)->get()->toArray();
 
     		switch ($type) {
     			case 'in':

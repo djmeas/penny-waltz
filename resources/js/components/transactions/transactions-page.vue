@@ -5,17 +5,11 @@
 			<transactions-add v-on:refreshRecentTransactions="refreshRecentTransactions()"></transactions-add>
 
 			<div class="row">
-				<div class="col-lg-6">
-					<transactions-recent ref="transactionsRecentIn" widgetType="in">
-						Recent Money-In
-					</transactions-recent>
+
+				<div class="col-lg-12">
+					<transactions-all ref="transactionsAll"></transactions-all>
 				</div>
 
-				<div class="col-lg-6">
-					<transactions-recent ref="transactionsRecentOut" widgetType="out">
-						Recent Money-Out
-					</transactions-recent>
-				</div>
 			</div>
 			
         </div>
@@ -34,15 +28,14 @@
     	methods: {
 
     		refreshRecentTransactions() {
-    			console.log('refresh?');
-    			this.$refs.transactionsRecentIn.getRecentTransactions();
+    			//console.log('refresh?');
+    			this.$refs.transactionsAll.getAllTransactions();
     		}
 
     	},
 
         mounted() {
-            console.log('Component mounted.')
-            console.log('test') 
+
         }
     }
 </script>
