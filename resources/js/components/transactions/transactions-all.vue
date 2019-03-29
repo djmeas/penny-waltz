@@ -5,30 +5,34 @@
 			<div class="card-header">
 				All Transactions 
 				<span v-if="paginatedData">
-					| Displaying {{paginatedData.from}} - {{paginatedData.to}} of {{paginatedData.total}} | 
-					Page {{paginatedData.current_page}} |
+					<span class="card-header-subheader">Displaying {{paginatedData.from}} - {{paginatedData.to}} of {{paginatedData.total}}</span> 
+					<span class="card-header-subheader">Page {{paginatedData.current_page}}</span>
+
 				</span>
 			</div>
 	        <div class="card-body">
 
-	            <div class="table-responsive ps">
+	            <div id="table-transactions-all" class="table-responsive ps">
 				    <table class="table tablesorter">
 				        <thead v-if="transactions.length > 0" class=" text-primary">
 				            <tr>
-				                <th>
+				                <th class="date">
 				                    Date
 				                </th>
-				                <th style="width:250px">
+				                <th class="category">
 				                    Category
 				                </th>
-				                <th>
+				                <th class="short-description">
 				                    Short Description
 				                </th>
-				                <th>
+				                <th class="additional-notes">
 				                	Additional Notes
 				                </th>
-				                <th>
+				                <th class="amount">
 				                	Amount
+				                </th>
+				                <th class="action text-center">
+				                	Actions
 				                </th>
 				            </tr>
 				        </thead>
@@ -49,6 +53,9 @@
 				                <td>
 				                    ${{transaction.amount}}
 				                </td>
+				                <td class="text-center" title="edit">
+				                	<i class="tim-icons icon-pencil"></i>
+				                </td>
 				            </tr>
 				            <tr v-show="transactions.length == 0" v-for="x in [0,1,2,3,4,5,6,7,8]">
 				            	<td colspan="99">
@@ -61,11 +68,13 @@
 
 				<div class="text-center">
 
-					<button @click="paginationChange(paginatedData.prev_page_url)" class="btn btn-default">
+					<button @click="paginationChange(paginatedData.prev_page_url)" 
+					class="btn btn-default" :class="{'faded':paginatedData.current_page == 1}">
 						<i class="tim-icons icon-minimal-left"></i>
 					</button>
 					&nbsp;&nbsp;&nbsp;
-					<button @click="paginationChange(paginatedData.next_page_url)" class="btn btn-default">
+					<button @click="paginationChange(paginatedData.next_page_url)" 
+					class="btn btn-default" :class="{'faded':paginatedData.last_page == paginatedData.current_page}">
 						<i class="tim-icons icon-minimal-right"></i>
 					</button>
 				</div>

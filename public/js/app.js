@@ -2101,6 +2101,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -74198,108 +74207,121 @@ var render = function() {
         _vm._v("\n\t\t\t\tAll Transactions \n\t\t\t\t"),
         _vm.paginatedData
           ? _c("span", [
-              _vm._v(
-                "\n\t\t\t\t\t| Displaying " +
-                  _vm._s(_vm.paginatedData.from) +
-                  " - " +
-                  _vm._s(_vm.paginatedData.to) +
-                  " of " +
-                  _vm._s(_vm.paginatedData.total) +
-                  " | \n\t\t\t\t\tPage " +
-                  _vm._s(_vm.paginatedData.current_page) +
-                  " |\n\t\t\t\t"
-              )
+              _c("span", { staticClass: "card-header-subheader" }, [
+                _vm._v(
+                  "Displaying " +
+                    _vm._s(_vm.paginatedData.from) +
+                    " - " +
+                    _vm._s(_vm.paginatedData.to) +
+                    " of " +
+                    _vm._s(_vm.paginatedData.total)
+                )
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "card-header-subheader" }, [
+                _vm._v("Page " + _vm._s(_vm.paginatedData.current_page))
+              ])
             ])
           : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "table-responsive ps" }, [
-          _c("table", { staticClass: "table tablesorter" }, [
-            _vm.transactions.length > 0
-              ? _c("thead", { staticClass: " text-primary" }, [_vm._m(0)])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              [
-                _vm._l(_vm.transactions, function(transaction) {
-                  return _vm.transactions.length > 0
-                    ? _c("tr", [
-                        _c("td", [
-                          _vm._v(
-                            "\n\t\t\t\t                    " +
-                              _vm._s(
-                                _vm._f("date_format_mdy")(transaction.date)
-                              ) +
-                              "\n\t\t\t\t                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n\t\t\t\t                    " +
-                              _vm._s(
-                                transaction.user_transaction_category.title
-                              ) +
-                              "\n\t\t\t\t                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n\t\t\t\t                    " +
-                              _vm._s(transaction.short_description) +
-                              "\n\t\t\t\t                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n\t\t\t\t                    " +
-                              _vm._s(transaction.additional_notes) +
-                              "\n\t\t\t\t                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n\t\t\t\t                    $" +
-                              _vm._s(transaction.amount) +
-                              "\n\t\t\t\t                "
-                          )
+        _c(
+          "div",
+          {
+            staticClass: "table-responsive ps",
+            attrs: { id: "table-transactions-all" }
+          },
+          [
+            _c("table", { staticClass: "table tablesorter" }, [
+              _vm.transactions.length > 0
+                ? _c("thead", { staticClass: " text-primary" }, [_vm._m(0)])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                [
+                  _vm._l(_vm.transactions, function(transaction) {
+                    return _vm.transactions.length > 0
+                      ? _c("tr", [
+                          _c("td", [
+                            _vm._v(
+                              "\n\t\t\t\t                    " +
+                                _vm._s(
+                                  _vm._f("date_format_mdy")(transaction.date)
+                                ) +
+                                "\n\t\t\t\t                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n\t\t\t\t                    " +
+                                _vm._s(
+                                  transaction.user_transaction_category.title
+                                ) +
+                                "\n\t\t\t\t                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n\t\t\t\t                    " +
+                                _vm._s(transaction.short_description) +
+                                "\n\t\t\t\t                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n\t\t\t\t                    " +
+                                _vm._s(transaction.additional_notes) +
+                                "\n\t\t\t\t                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n\t\t\t\t                    $" +
+                                _vm._s(transaction.amount) +
+                                "\n\t\t\t\t                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(1, true)
                         ])
-                      ])
-                    : _vm._e()
-                }),
-                _vm._v(" "),
-                _vm._l([0, 1, 2, 3, 4, 5, 6, 7, 8], function(x) {
-                  return _c(
-                    "tr",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.transactions.length == 0,
-                          expression: "transactions.length == 0"
-                        }
-                      ]
-                    },
-                    [_vm._m(1, true)]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ]),
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
+                  _vm._l([0, 1, 2, 3, 4, 5, 6, 7, 8], function(x) {
+                    return _c(
+                      "tr",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.transactions.length == 0,
+                            expression: "transactions.length == 0"
+                          }
+                        ]
+                      },
+                      [_vm._m(2, true)]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "text-center" }, [
           _c(
             "button",
             {
               staticClass: "btn btn-default",
+              class: { faded: _vm.paginatedData.current_page == 1 },
               on: {
                 click: function($event) {
                   return _vm.paginationChange(_vm.paginatedData.prev_page_url)
@@ -74313,6 +74335,10 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-default",
+              class: {
+                faded:
+                  _vm.paginatedData.last_page == _vm.paginatedData.current_page
+              },
               on: {
                 click: function($event) {
                   return _vm.paginationChange(_vm.paginatedData.next_page_url)
@@ -74332,31 +74358,43 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [
+      _c("th", { staticClass: "date" }, [
         _vm._v("\n\t\t\t\t                    Date\n\t\t\t\t                ")
       ]),
       _vm._v(" "),
-      _c("th", { staticStyle: { width: "250px" } }, [
+      _c("th", { staticClass: "category" }, [
         _vm._v(
           "\n\t\t\t\t                    Category\n\t\t\t\t                "
         )
       ]),
       _vm._v(" "),
-      _c("th", [
+      _c("th", { staticClass: "short-description" }, [
         _vm._v(
           "\n\t\t\t\t                    Short Description\n\t\t\t\t                "
         )
       ]),
       _vm._v(" "),
-      _c("th", [
+      _c("th", { staticClass: "additional-notes" }, [
         _vm._v(
           "\n\t\t\t\t                \tAdditional Notes\n\t\t\t\t                "
         )
       ]),
       _vm._v(" "),
-      _c("th", [
+      _c("th", { staticClass: "amount" }, [
         _vm._v("\n\t\t\t\t                \tAmount\n\t\t\t\t                ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "action text-center" }, [
+        _vm._v("\n\t\t\t\t                \tActions\n\t\t\t\t                ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center", attrs: { title: "edit" } }, [
+      _c("i", { staticClass: "tim-icons icon-pencil" })
     ])
   },
   function() {

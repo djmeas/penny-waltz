@@ -1,5 +1,17 @@
 /* Custom Styles */
 
+/** Fonts **/
+
+.fa-small {
+  font-size: 0.5em;
+}
+
+/** Effects **/
+
+.faded {
+  opacity: 0.3 !important;
+}
+
 /*  The  snackbar  -  position  it  at  the  bottom  and  in  the  middle  of  the  screen  */
 
 #snackbar {
@@ -133,5 +145,33 @@ textarea.form-control {
   height: 10px;
   margin-bottom: 7.5px;
   background-color: #40435d;
+}
+
+/** Cards **/
+
+.card-header-subheader {
+  padding: 0px 0px 0px 25px;
+}
+
+/** Transactions **/
+
+#table-transactions-all .date {
+  width: 100px;
+}
+
+#table-transactions-all .category {
+  width: 150px;
+}
+
+#table-transactions-all .short-description {
+  width: 400px;
+}
+
+#table-transactions-all .amount {
+  width: 100px;
+}
+
+#table-transactions-all .action {
+  width: 100px;
 }
 
