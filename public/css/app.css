@@ -12,6 +12,35 @@
   opacity: 0.3 !important;
 }
 
+.loading-opacity {
+  -webkit-animation: is-loading;
+  animation: is-loading;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes is-loading {
+  from {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0.7;
+  }
+}
+
+@keyframes is-loading {
+  from {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0.7;
+  }
+}
+
 /*  The  snackbar  -  position  it  at  the  bottom  and  in  the  middle  of  the  screen  */
 
 #snackbar {
@@ -155,23 +184,24 @@ textarea.form-control {
 
 /** Transactions **/
 
-#table-transactions-all .date {
-  width: 100px;
-}
-
-#table-transactions-all .category {
+#table-transactions-all .date,
+#table-transactions-all .type {
   width: 150px;
 }
 
+#table-transactions-all .category {
+  width: 200px;
+}
+
 #table-transactions-all .short-description {
-  width: 400px;
+  width: 300px;
 }
 
 #table-transactions-all .amount {
-  width: 100px;
+  width: 150px;
 }
 
 #table-transactions-all .action {
-  width: 100px;
+  width: 150px;
 }
 

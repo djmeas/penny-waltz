@@ -1,11 +1,11 @@
 <template>
-	<div>
+	<div :class="{'loading-opacity':isLoading}">
 		<!-- All Transactions -->
 		<div class="card">
 			<div class="card-header">
-				All Transactions 
+				<h3>All Transactions</h3>
 				<span v-if="paginatedData">
-					<span class="card-header-subheader">Displaying {{paginatedData.from}} - {{paginatedData.to}} of {{paginatedData.total}}</span> 
+					Displaying {{paginatedData.from}} - {{paginatedData.to}} of {{paginatedData.total}}
 					<span class="card-header-subheader">Page {{paginatedData.current_page}}</span>
 
 				</span>
@@ -18,6 +18,9 @@
 				            <tr>
 				                <th class="date">
 				                    Date
+				                </th>
+				                <th class="type">
+				                	Type
 				                </th>
 				                <th class="category">
 				                    Category
@@ -42,6 +45,9 @@
 				                    {{transaction.date | date_format_mdy}}
 				                </td>
 				                <td>
+				                	{{$transactionTypeList[transaction.type_id]['title']}}
+				                </td>
+				                <td>
 				                    {{transaction.user_transaction_category.title}}
 				                </td>
 				                <td>
@@ -57,7 +63,7 @@
 				                	<i class="tim-icons icon-pencil"></i>
 				                </td>
 				            </tr>
-				            <tr v-show="transactions.length == 0" v-for="x in [0,1,2,3,4,5,6,7,8]">
+				            <tr v-show="transactions.length == 0" v-for="x in 10">
 				            	<td colspan="99">
 				                	<div class="ph-item" style="margin:0px;padding:14px"></div>
 				                </td>
@@ -66,7 +72,7 @@
 				    </table>
 				</div>
 
-				<div class="text-center">
+				<div v-if="paginatedData" class="text-center">
 
 					<button @click="paginationChange(paginatedData.prev_page_url)" 
 					class="btn btn-default" :class="{'faded':paginatedData.current_page == 1}">
@@ -89,6 +95,8 @@
 
     	data() { 
     		return {
+    			isInit: false,
+    			isLoading: false,
     			paginatedData: null,
     			transactions: [],
     		}
@@ -113,11 +121,15 @@
 
     		paginationChange(url) {
 
+    			this.isLoading = true;
+
     			axios.post(url).then( response => {
     				this.paginatedData = response.data;
     				this.transactions = response.data.data;
     			}).catch( error => {
     				Vue.prototype.$flashMessage(error.response.data.message, 'error');
+    			}).finally( response => {
+    				this.isLoading = false;
     			}); 
 
     		}

@@ -1932,6 +1932,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1976,6 +2045,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     // Helpers
+    componentStateChecker: function componentStateChecker() {
+      this.componentState = this.form.category_id == 0 ? 'add_category' : this.componentState;
+
+      if (this.componentState == 'add_category') {
+        this.getUserTransactionCategories();
+      }
+    },
     // Initialize
     _initForm: function _initForm() {
       this.validationMessages = {};
@@ -2110,9 +2186,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      isInit: false,
+      isLoading: false,
       paginatedData: null,
       transactions: []
     };
@@ -2132,11 +2216,14 @@ __webpack_require__.r(__webpack_exports__);
     paginationChange: function paginationChange(url) {
       var _this2 = this;
 
+      this.isLoading = true;
       axios.post(url).then(function (response) {
         _this2.paginatedData = response.data;
         _this2.transactions = response.data.data;
       }).catch(function (error) {
         Vue.prototype.$flashMessage(error.response.data.message, 'error');
+      }).finally(function (response) {
+        _this2.isLoading = false;
       });
     }
   },
@@ -73769,6 +73856,21 @@ var render = function() {
             }
           },
           [_vm._v("\n\t\t\t\tAdd Transaction\n\t\t\t")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-fill btn-primary",
+            attrs: { title: "Quickly add a category" },
+            on: {
+              click: function($event) {
+                _vm.componentState = "add_category"
+                _vm.getUserTransactionCategories()
+              }
+            }
+          },
+          [_vm._v("\n                Add Category\n            ")]
         )
       ]
     ),
@@ -73787,7 +73889,7 @@ var render = function() {
         staticClass: "card"
       },
       [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Add Transaction")]),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
@@ -73796,7 +73898,7 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
-                  _vm._m(0),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -73840,7 +73942,7 @@ var render = function() {
               { staticClass: "col-lg-3" },
               [
                 _c("div", { staticClass: "form-group" }, [
-                  _vm._m(1),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "select",
@@ -73910,7 +74012,7 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
-                  _vm._m(2),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c(
                     "select",
@@ -73930,23 +74032,28 @@ var render = function() {
                         )
                       },
                       on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.form,
-                            "category_id",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "category_id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            return _vm.componentStateChecker()
+                          }
+                        ]
                       }
                     },
                     [
@@ -73984,7 +74091,7 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
-                  _vm._m(3),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -74028,7 +74135,7 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
-                  _vm._m(4),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -74130,10 +74237,104 @@ var render = function() {
           )
         ])
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm.componentState == "add_category"
+      ? _c("div", [
+          _c("div", { staticClass: "card" }, [
+            _vm._m(6),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-6" }, [
+                  _c("h3", [_vm._v("Money In")]),
+                  _vm._v(" "),
+                  _c("table", { staticClass: "table tablesorter" }, [
+                    _vm._m(7),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      [
+                        _vm._l(_vm.formCategories.in, function(category) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(category.title))])
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _vm._l(10, function(x) {
+                          return _vm.formCategories.length == 0
+                            ? _c("tr", [_vm._m(8, true)])
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-6" }, [
+                  _c("h3", [_vm._v("Money Out")]),
+                  _vm._v(" "),
+                  _c("table", { staticClass: "table tablesorter" }, [
+                    _vm._m(9),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      [
+                        _vm._l(_vm.formCategories.out, function(category) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(category.title))])
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _vm._l(10, function(x) {
+                          return _vm.formCategories.length == 0
+                            ? _c("tr", [_vm._m(10, true)])
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-fill btn-danger",
+                  on: {
+                    click: function($event) {
+                      _vm.componentState = null
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-fill btn-success",
+                  on: { click: _vm.saveTransaction }
+                },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", [_vm._v("Add Transaction")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -74178,6 +74379,48 @@ var staticRenderFns = [
       _vm._v("Short Description "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", [_vm._v("Add Category")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [_c("tr", [_c("th", [_vm._v("Name")])])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "99" } }, [
+      _c("div", {
+        staticClass: "ph-item",
+        staticStyle: { margin: "0px", padding: "14px" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [_c("tr", [_c("th", [_vm._v("Name")])])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "99" } }, [
+      _c("div", {
+        staticClass: "ph-item",
+        staticStyle: { margin: "0px", padding: "14px" }
+      })
+    ])
   }
 ]
 render._withStripped = true
@@ -74201,23 +74444,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { class: { "loading-opacity": _vm.isLoading } }, [
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
-        _vm._v("\n\t\t\t\tAll Transactions \n\t\t\t\t"),
+        _c("h3", [_vm._v("All Transactions")]),
+        _vm._v(" "),
         _vm.paginatedData
           ? _c("span", [
-              _c("span", { staticClass: "card-header-subheader" }, [
-                _vm._v(
-                  "Displaying " +
-                    _vm._s(_vm.paginatedData.from) +
-                    " - " +
-                    _vm._s(_vm.paginatedData.to) +
-                    " of " +
-                    _vm._s(_vm.paginatedData.total)
-                )
-              ]),
-              _vm._v(" "),
+              _vm._v(
+                "\n\t\t\t\t\tDisplaying " +
+                  _vm._s(_vm.paginatedData.from) +
+                  " - " +
+                  _vm._s(_vm.paginatedData.to) +
+                  " of " +
+                  _vm._s(_vm.paginatedData.total) +
+                  "\n\t\t\t\t\t"
+              ),
               _c("span", { staticClass: "card-header-subheader" }, [
                 _vm._v("Page " + _vm._s(_vm.paginatedData.current_page))
               ])
@@ -74249,6 +74491,18 @@ var render = function() {
                               "\n\t\t\t\t                    " +
                                 _vm._s(
                                   _vm._f("date_format_mdy")(transaction.date)
+                                ) +
+                                "\n\t\t\t\t                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n\t\t\t\t                \t" +
+                                _vm._s(
+                                  _vm.$transactionTypeList[transaction.type_id][
+                                    "title"
+                                  ]
                                 ) +
                                 "\n\t\t\t\t                "
                             )
@@ -74293,7 +74547,7 @@ var render = function() {
                       : _vm._e()
                   }),
                   _vm._v(" "),
-                  _vm._l([0, 1, 2, 3, 4, 5, 6, 7, 8], function(x) {
+                  _vm._l(10, function(x) {
                     return _c(
                       "tr",
                       {
@@ -74316,38 +74570,45 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "text-center" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-default",
-              class: { faded: _vm.paginatedData.current_page == 1 },
-              on: {
-                click: function($event) {
-                  return _vm.paginationChange(_vm.paginatedData.prev_page_url)
-                }
-              }
-            },
-            [_c("i", { staticClass: "tim-icons icon-minimal-left" })]
-          ),
-          _vm._v("\n\t\t\t\t\t   \n\t\t\t\t\t"),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-default",
-              class: {
-                faded:
-                  _vm.paginatedData.last_page == _vm.paginatedData.current_page
-              },
-              on: {
-                click: function($event) {
-                  return _vm.paginationChange(_vm.paginatedData.next_page_url)
-                }
-              }
-            },
-            [_c("i", { staticClass: "tim-icons icon-minimal-right" })]
-          )
-        ])
+        _vm.paginatedData
+          ? _c("div", { staticClass: "text-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  class: { faded: _vm.paginatedData.current_page == 1 },
+                  on: {
+                    click: function($event) {
+                      return _vm.paginationChange(
+                        _vm.paginatedData.prev_page_url
+                      )
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "tim-icons icon-minimal-left" })]
+              ),
+              _vm._v("\n\t\t\t\t\t   \n\t\t\t\t\t"),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  class: {
+                    faded:
+                      _vm.paginatedData.last_page ==
+                      _vm.paginatedData.current_page
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.paginationChange(
+                        _vm.paginatedData.next_page_url
+                      )
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "tim-icons icon-minimal-right" })]
+              )
+            ])
+          : _vm._e()
       ])
     ])
   ])
@@ -74360,6 +74621,10 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", { staticClass: "date" }, [
         _vm._v("\n\t\t\t\t                    Date\n\t\t\t\t                ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "type" }, [
+        _vm._v("\n\t\t\t\t                \tType\n\t\t\t\t                ")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "category" }, [
@@ -91489,13 +91754,16 @@ Vue.prototype.$apiRoutes = {
     url: Vue.prototype.$baseAPI + '/transactions/recent'
   }
 };
-Vue.prototype.$transactionTypeList = [{
-  title: 'Money In',
-  value: 1
-}, {
-  title: 'Money Out',
-  value: -1
-}];
+Vue.prototype.$transactionTypeList = {
+  "1": {
+    title: 'Revenue',
+    value: 1
+  },
+  "-1": {
+    title: 'Expense',
+    value: -1
+  }
+};
 
 Vue.prototype.$flashMessage = function flashMessage(message, type) {
   // Get the snackbar DIV

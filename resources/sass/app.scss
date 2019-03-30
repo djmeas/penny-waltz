@@ -11,6 +11,24 @@
 	opacity: .3 !important;
 }
 
+.loading-opacity {
+	-webkit-animation: is-loading;
+    animation: is-loading;
+    animation-duration: 1s;
+  	animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes is-loading  {
+    from  {opacity:  .5;}  
+    to  {opacity:  .7;}  
+}
+
+@keyframes is-loading {
+    from  {opacity:  .5;}  
+    to  {opacity:  .7;}  
+}
+
+
 /*  The  snackbar  -  position  it  at  the  bottom  and  in  the  middle  of  the  screen  */
 #snackbar  {
         visibility:  hidden;  /*  Hidden  by  default.  Visible  on  click  */
@@ -115,16 +133,16 @@ textarea.form-control {
 /** Transactions **/
 #table-transactions-all {
 
-	.date {
-		width: 100px;
-	}
-
-	.category {
+	.date, .type {
 		width: 150px;
 	}
 
+	.category {
+		width: 200px;
+	}
+
 	.short-description {
-		width: 400px;
+		width: 300px;
 	}
 
 	.additional-notes {
@@ -132,11 +150,11 @@ textarea.form-control {
 	}
 
 	.amount {
-		width: 100px;
+		width: 150px;
 	}
 
 	.action {
-		width: 100px;
+		width: 150px;
 	}
 
 }

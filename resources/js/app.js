@@ -66,16 +66,16 @@ Vue.prototype.$apiRoutes = {
 
 }; 
 
-Vue.prototype.$transactionTypeList = [
-	{
-		title: 'Money In',
+Vue.prototype.$transactionTypeList = {
+	"1": {
+		title: 'Revenue',
 		value: 1
 	},
-	{
-		title: 'Money Out',
+	"-1": {
+		title: 'Expense',
 		value: -1
 	}
-];
+};
 
 Vue.prototype.$flashMessage = function flashMessage(message, type) {
     // Get the snackbar DIV

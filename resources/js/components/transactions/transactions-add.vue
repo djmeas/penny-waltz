@@ -6,11 +6,17 @@
             id="action-add-transaction" class="btn btn-fill btn-primary" title="Quickly add a transaction">
 				Add Transaction
 			</button>
+            <button @click="componentState = 'add_category';getUserTransactionCategories();"
+            class="btn btn-fill btn-primary" title="Quickly add a category">
+                Add Category
+            </button>
 		</div>
 
         <!-- Add -->
         <div v-show="componentState == 'add'" class="card">
-            <div class="card-header">Add Transaction</div>
+            <div class="card-header">
+                <h3>Add Transaction</h3>
+            </div>
             <div class="card-body">
                 
                 <div class="row">
@@ -40,11 +46,13 @@
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label>Category <span class="text-danger">*</span></label>
-                            <select :class="{'border-danger': validationMessages.hasOwnProperty('category_id')}" class="form-control" v-model="form.category_id">
+                            <select v-model="form.category_id" @change="componentStateChecker()"
+                            :class="{'border-danger': validationMessages.hasOwnProperty('category_id')}" class="form-control">
                                 <option :value="null">Select...</option>
                                 <option v-if="computedFormCategories.length > 0" v-for="option in computedFormCategories" :value="option.id">
                                     {{option.title}}
                                 </option>
+                                <!--<option v-if="computedFormCategories.length > 0" value="0">+ Add New Cateogry</option>-->
                             </select>
                             <validation-messages 
                             v-if="validationMessages.hasOwnProperty('category_id')" :messages="validationMessages.category_id">
@@ -83,6 +91,67 @@
                 id="action-save-transaction" class="btn btn-fill btn-success">Save</button>
             </div>
         </div>
+
+        <!-- Add Category -->
+        <div v-if="componentState == 'add_category'">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Add Category</h3>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h3>Money In</h3>
+                            <table class="table tablesorter">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="category in formCategories.in">
+                                        <td>{{category.title}}</td>
+                                    </tr>
+                                    <tr v-if="formCategories.length == 0" v-for="x in 10">
+                                        <td colspan="99">
+                                            <div class="ph-item" style="margin:0px;padding:14px"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-6">
+                            <h3>Money Out</h3>
+                            <table class="table tablesorter">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="category in formCategories.out">
+                                        <td>{{category.title}}</td>
+                                    </tr>
+                                    <tr v-if="formCategories.length == 0" v-for="x in 10">
+                                        <td colspan="99">
+                                            <div class="ph-item" style="margin:0px;padding:14px"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <button @click="componentState = null" 
+                    class="btn btn-fill btn-danger">Cancel</button>
+                    <button @click="saveTransaction" 
+                    class="btn btn-fill btn-success">Save</button>
+
+                </div>
+            </div>
+        </div>
+
 	</div>     
 </template>
 
@@ -140,6 +209,15 @@
             },
 
             // Helpers
+            componentStateChecker() {
+
+                this.componentState = this.form.category_id == 0 ? 'add_category' : this.componentState;
+
+                if(this.componentState == 'add_category') {
+                    this.getUserTransactionCategories();
+                }
+
+            },
 
             // Initialize
 
