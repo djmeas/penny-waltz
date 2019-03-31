@@ -1,19 +1,9 @@
 <template>
 	<div style="margin-bottom:20px">
         <!-- Default -->
-		<div v-show="componentState == null" class="page-btn-container">
-			<button @click="componentState = 'add';getUserTransactionCategories();_initForm()"
-            id="action-add-transaction" class="btn btn-fill btn-primary" title="Quickly add a transaction">
-				Add Transaction
-			</button>
-            <button @click="componentState = 'add_category';getUserTransactionCategories();"
-            class="btn btn-fill btn-primary" title="Quickly add a category">
-                Transaction Categories
-            </button>
-		</div>
-
+		
         <!-- Add -->
-        <div v-show="componentState == 'add'" class="card">
+        <div class="card">
             <div class="card-header">
                 <h4>Add Transaction</h4>
             </div>
@@ -48,7 +38,8 @@
                             <label>Category <span class="text-danger">*</span></label>
                             <select v-model="form.category_id" @change="componentStateChecker()"
                             :class="{'border-danger': validationMessages.hasOwnProperty('category_id')}" class="form-control">
-                                <option :value="null">Select...</option>
+                                <option v-if="form.type_id == null" :value="null">Please seelct a type first...</option>
+                                <option v-if="form.type_id != null" :value="null">Select...</option>
                                 <option v-if="computedFormCategories.length > 0" v-for="option in computedFormCategories" :value="option.id">
                                     {{option.title}}
                                 </option>
@@ -85,92 +76,15 @@
                     </div>
                 </div>
 
-                <button @click="componentState = null" 
-                id="action-cancel-transaction" class="btn btn-fill btn-danger">Cancel</button>
+                <button @click="$emit('cancel')" 
+                id="action-cancel-transaction" class="btn btn-fill btn-danger">
+                    Cancel
+                </button>
+                
                 <button @click="saveTransaction" 
-                id="action-save-transaction" class="btn btn-fill btn-success">Save</button>
-            </div>
-        </div>
-
-        <!-- Add Category -->
-        <div v-if="componentState == 'add_category'">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Transaction Category</h4>
-                </div>
-                <div class="card-body">
-                    
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h4>Revenue</h4>
-                            <table class="table tablesorter">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th style="width:50px">&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="category in formCategories.in" class="hidden-children">
-                                        <td>{{category.title}}</td>
-                                        <td>
-                                            <i v-on:click="deleteTransactionCategory(category.id)" 
-                                            class="clickable tim-icons icon-simple-remove show-on-hover"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="99">
-                                            <input v-model="categoryForm.revenue" v-on:keyup.enter="saveCategory('revenue')"
-                                            class="form-control" type="text" placeholder="Add a new revenue category">
-                                        </td>
-                                       
-                                    </tr>
-                                    <tr v-if="formCategories.length == 0" v-for="x in 10">
-                                        <td colspan="99">
-                                            <div class="ph-item" style="margin:0px;padding:14px"></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-lg-6">
-                            <h4>Expense</h4>
-                            <table class="table tablesorter">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th style="width:50px">&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="category in formCategories.out" class="hidden-children">
-                                        <td>{{category.title}}</td>
-                                        <td>
-                                            <i v-on:click="deleteTransactionCategory(category.id)"
-                                            class="tim-icons icon-simple-remove show-on-hover"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="99">
-                                            <input v-model="categoryForm.expense" v-on:keyup.enter="saveCategory('expense')"
-                                            class="form-control" type="text" placeholder="Add a new expense category">
-                                        </td>
-                                       
-                                    </tr>
-                                    <tr v-if="formCategories.length == 0" v-for="x in 10">
-                                        <td colspan="99">
-                                            <div class="ph-item" style="margin:0px;padding:14px"></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <button @click="componentState = null" 
-                    class="btn btn-fill btn-danger">Back</button>
-
-                </div>
+                id="action-save-transaction" class="btn btn-fill btn-success">
+                    Save
+                </button>
             </div>
         </div>
 
@@ -309,7 +223,9 @@
         },
 
         mounted() {
-            console.log('Component mounted.')
+            //console.log('Component mounted.')
+
+            this.getUserTransactionCategories();
 
             this._initForm();
 

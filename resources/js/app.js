@@ -35,6 +35,7 @@ Vue.component('transactions-page', require('./components/transactions/transactio
 Vue.component('transactions-add', require('./components/transactions/transactions-add.vue').default); 
 Vue.component('transactions-recent', require('./components/transactions/transactions-recent.vue').default); 
 Vue.component('transactions-all', require('./components/transactions/transactions-all.vue').default); 
+Vue.component('transactions-categories', require('./components/transactions/transactions-categories.vue').default); 
 
 /**
  * Global / Prototype
