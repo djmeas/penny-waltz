@@ -4,13 +4,13 @@
     <div class="row">
         <div class="col-lg-6">
             <transactions-recent ref="transactionsRecentIn" widgetType="in">
-                Recent Money-In
+                <h4>Recent Revenue</h4>
             </transactions-recent>
         </div>
 
         <div class="col-lg-6">
             <transactions-recent ref="transactionsRecentOut" widgetType="out">
-                Recent Money-Out
+                <h4>Recent Expenses</h4>
             </transactions-recent>
         </div>
     </div>

@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Transaction as Transaction;
-use App\UserTransactionCategory as UserTransactionCategory;
-use Auth;
-use Carbon\Carbon;
+use App\Transaction;
+
+use App\UserTransactionCategory;
 
 // Requests
 use App\Http\Requests\SaveTransactionRequest;
+use App\Http\Requests\SaveTransactionCategoryRequest;
+
+use Auth;
+use Carbon\Carbon;
+
+
 
 class TransactionsAPIController extends Controller
 {
@@ -49,7 +54,7 @@ class TransactionsAPIController extends Controller
 
     		$transaction->create($postData);
 
-    		return response(['message' => 'Awesome! Your transaction has been saved!'], 201);
+    		return response(['message' => 'Your transaction has been saved!'], 201);
 
     	} catch (\Exception $e) {
     		
@@ -60,6 +65,51 @@ class TransactionsAPIController extends Controller
     		], 400);
 
     	}
+
+    }
+
+    public function saveTransactionCategory(SaveTransactionCategoryRequest $request) {
+
+        try {
+            
+            $postData = $request->all();
+
+            $postData['user_id'] = Auth::user()->id;
+
+            $transactionCategory = new UserTransactionCategory();
+            $transactionCategory->create($postData);
+
+            return response(['message' => 'Your category has been saved!'], 201);
+
+        } catch (\Exception $e) {
+            
+            return response([
+                'message' => 'Error!  We could not save your transaction category.',
+                'e' => $e,
+                'postData' => $postData
+            ], 400);
+
+        }
+
+    }
+
+    public function deleteTransactionCategory($category_id) {
+
+        try {
+            
+            $transactionCategory = UserTransactionCategory::where('id', $category_id)
+                ->where('user_id', Auth::user()->id)->delete();   
+
+            return response(['message' => 'Your category has been deleted.'], 200);
+
+        } catch (\Exception $e) {
+            
+             return response([
+                'message' => 'Error!  We could not delete your transaction category.',
+                'e' => $e
+            ], 400);
+
+        }
 
     }
 
@@ -78,7 +128,7 @@ class TransactionsAPIController extends Controller
     	} catch (\Exception $e) {
     		
     		return response([
-    			'msg' => 'Error!  We could not save your transaction.',
+    			'message' => 'Error!  We could not save your transaction.',
     			'e' => $e,
     			//'postData' => $postData
     		], 400);

@@ -8,14 +8,14 @@
 			</button>
             <button @click="componentState = 'add_category';getUserTransactionCategories();"
             class="btn btn-fill btn-primary" title="Quickly add a category">
-                Add Category
+                Transaction Categories
             </button>
 		</div>
 
         <!-- Add -->
         <div v-show="componentState == 'add'" class="card">
             <div class="card-header">
-                <h3>Add Transaction</h3>
+                <h4>Add Transaction</h4>
             </div>
             <div class="card-body">
                 
@@ -96,22 +96,34 @@
         <div v-if="componentState == 'add_category'">
             <div class="card">
                 <div class="card-header">
-                    <h3>Add Category</h3>
+                    <h4>Transaction Category</h4>
                 </div>
                 <div class="card-body">
                     
                     <div class="row">
                         <div class="col-lg-6">
-                            <h3>Money In</h3>
+                            <h4>Revenue</h4>
                             <table class="table tablesorter">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th style="width:50px">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="category in formCategories.in">
+                                    <tr v-for="category in formCategories.in" class="hidden-children">
                                         <td>{{category.title}}</td>
+                                        <td>
+                                            <i v-on:click="deleteTransactionCategory(category.id)" 
+                                            class="clickable tim-icons icon-simple-remove show-on-hover"></i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="99">
+                                            <input v-model="categoryForm.revenue" v-on:keyup.enter="saveCategory('revenue')"
+                                            class="form-control" type="text" placeholder="Add a new revenue category">
+                                        </td>
+                                       
                                     </tr>
                                     <tr v-if="formCategories.length == 0" v-for="x in 10">
                                         <td colspan="99">
@@ -122,16 +134,28 @@
                             </table>
                         </div>
                         <div class="col-lg-6">
-                            <h3>Money Out</h3>
+                            <h4>Expense</h4>
                             <table class="table tablesorter">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th style="width:50px">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="category in formCategories.out">
+                                    <tr v-for="category in formCategories.out" class="hidden-children">
                                         <td>{{category.title}}</td>
+                                        <td>
+                                            <i v-on:click="deleteTransactionCategory(category.id)"
+                                            class="tim-icons icon-simple-remove show-on-hover"></i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="99">
+                                            <input v-model="categoryForm.expense" v-on:keyup.enter="saveCategory('expense')"
+                                            class="form-control" type="text" placeholder="Add a new expense category">
+                                        </td>
+                                       
                                     </tr>
                                     <tr v-if="formCategories.length == 0" v-for="x in 10">
                                         <td colspan="99">
@@ -144,9 +168,7 @@
                     </div>
 
                     <button @click="componentState = null" 
-                    class="btn btn-fill btn-danger">Cancel</button>
-                    <button @click="saveTransaction" 
-                    class="btn btn-fill btn-success">Save</button>
+                    class="btn btn-fill btn-danger">Back</button>
 
                 </div>
             </div>
@@ -166,6 +188,8 @@
                 formTypeOptions: Vue.prototype.$transactionTypeList,
                 formCategories: [],
                 form: {},
+
+                categoryForm: {},
 
                 // Errors
                 validationMessages: {}
@@ -208,6 +232,35 @@
 
             },
 
+            saveCategory(type) {
+
+                this.categoryForm.title = type == 'revenue' ? this.categoryForm.revenue : this.categoryForm.expense;
+                this.categoryForm.type_id = type == 'revenue' ? 1 : -1;
+
+                axios.post(Vue.prototype.$apiRoutes.addTransactionCategory.url, this.categoryForm).then(response => {
+                    Vue.prototype.$flashMessage(response.data.message, 'success');
+                    this.getUserTransactionCategories();
+                    this._initForm();
+                }).catch(error => {
+
+                }).finally(response => {
+
+                });
+
+            },
+
+            deleteTransactionCategory(categoryID) {
+
+                axios.delete(Vue.prototype.$apiRoutes.deleteTransactionCategory.url + categoryID,).then(response => {
+                    Vue.prototype.$flashMessage(response.data.message, 'success');
+                    this.getUserTransactionCategories();
+                    this._initForm();
+                }).catch(error => {
+                    Vue.prototype.$flashMessage(error.data.message, 'error');
+                });
+
+            },
+
             // Helpers
             componentStateChecker() {
 
@@ -230,6 +283,12 @@
                     short_description: null,
                     additional_notes: null,
                     date: null
+                }
+
+                this.categoryForm = {
+                    revenue: '',
+                    expense: '',
+                    type_id: null
                 }
             }
 

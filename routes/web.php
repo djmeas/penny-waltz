@@ -39,5 +39,7 @@ Route::prefix('api')->group(function () {
         Route::post('all', 'TransactionsAPIController@get_all_transactions');
         Route::get('recent/{type?}', 'TransactionsAPIController@get_recent_transactions');
         Route::post('save', 'TransactionsAPIController@save');
+        Route::post('category/save', 'TransactionsAPIController@saveTransactionCategory');
+        Route::delete('category/{category_id}', 'TransactionsAPIController@deleteTransactionCategory');
     });
 });

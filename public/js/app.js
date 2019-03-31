@@ -2001,6 +2001,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2009,6 +2031,7 @@ __webpack_require__.r(__webpack_exports__);
       formTypeOptions: Vue.prototype.$transactionTypeList,
       formCategories: [],
       form: {},
+      categoryForm: {},
       // Errors
       validationMessages: {}
     };
@@ -2044,6 +2067,32 @@ __webpack_require__.r(__webpack_exports__);
         Vue.prototype.$flashMessage('Whoops! Please check all fields and try submitting again.', 'error');
       });
     },
+    saveCategory: function saveCategory(type) {
+      var _this3 = this;
+
+      this.categoryForm.title = type == 'revenue' ? this.categoryForm.revenue : this.categoryForm.expense;
+      this.categoryForm.type_id = type == 'revenue' ? 1 : -1;
+      axios.post(Vue.prototype.$apiRoutes.addTransactionCategory.url, this.categoryForm).then(function (response) {
+        Vue.prototype.$flashMessage(response.data.message, 'success');
+
+        _this3.getUserTransactionCategories();
+
+        _this3._initForm();
+      }).catch(function (error) {}).finally(function (response) {});
+    },
+    deleteTransactionCategory: function deleteTransactionCategory(categoryID) {
+      var _this4 = this;
+
+      axios.delete(Vue.prototype.$apiRoutes.deleteTransactionCategory.url + categoryID).then(function (response) {
+        Vue.prototype.$flashMessage(response.data.message, 'success');
+
+        _this4.getUserTransactionCategories();
+
+        _this4._initForm();
+      }).catch(function (error) {
+        Vue.prototype.$flashMessage(error.data.message, 'error');
+      });
+    },
     // Helpers
     componentStateChecker: function componentStateChecker() {
       this.componentState = this.form.category_id == 0 ? 'add_category' : this.componentState;
@@ -2063,6 +2112,11 @@ __webpack_require__.r(__webpack_exports__);
         additional_notes: null,
         date: null
       };
+      this.categoryForm = {
+        revenue: '',
+        expense: '',
+        type_id: null
+      };
     }
   },
   computed: {
@@ -2075,7 +2129,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this5 = this;
 
     console.log('Component mounted.');
 
@@ -2083,7 +2137,7 @@ __webpack_require__.r(__webpack_exports__);
 
     $("#transaction-date").datepicker({
       onSelect: function onSelect(dateText) {
-        _this3.form.date = dateText;
+        _this5.form.date = dateText;
       }
     });
   }
@@ -73870,7 +73924,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("\n                Add Category\n            ")]
+          [_vm._v("\n                Transaction Categories\n            ")]
         )
       ]
     ),
@@ -74247,7 +74301,7 @@ var render = function() {
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-lg-6" }, [
-                  _c("h3", [_vm._v("Money In")]),
+                  _c("h4", [_vm._v("Revenue")]),
                   _vm._v(" "),
                   _c("table", { staticClass: "table tablesorter" }, [
                     _vm._m(7),
@@ -74256,10 +74310,72 @@ var render = function() {
                       "tbody",
                       [
                         _vm._l(_vm.formCategories.in, function(category) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(category.title))])
+                          return _c("tr", { staticClass: "hidden-children" }, [
+                            _c("td", [_vm._v(_vm._s(category.title))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("i", {
+                                staticClass:
+                                  "clickable tim-icons icon-simple-remove show-on-hover",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteTransactionCategory(
+                                      category.id
+                                    )
+                                  }
+                                }
+                              })
+                            ])
                           ])
                         }),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { attrs: { colspan: "99" } }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.categoryForm.revenue,
+                                  expression: "categoryForm.revenue"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Add a new revenue category"
+                              },
+                              domProps: { value: _vm.categoryForm.revenue },
+                              on: {
+                                keyup: function($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "enter",
+                                      13,
+                                      $event.key,
+                                      "Enter"
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.saveCategory("revenue")
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.categoryForm,
+                                    "revenue",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
                         _vm._v(" "),
                         _vm._l(10, function(x) {
                           return _vm.formCategories.length == 0
@@ -74273,7 +74389,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-6" }, [
-                  _c("h3", [_vm._v("Money Out")]),
+                  _c("h4", [_vm._v("Expense")]),
                   _vm._v(" "),
                   _c("table", { staticClass: "table tablesorter" }, [
                     _vm._m(9),
@@ -74282,10 +74398,72 @@ var render = function() {
                       "tbody",
                       [
                         _vm._l(_vm.formCategories.out, function(category) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(category.title))])
+                          return _c("tr", { staticClass: "hidden-children" }, [
+                            _c("td", [_vm._v(_vm._s(category.title))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("i", {
+                                staticClass:
+                                  "tim-icons icon-simple-remove show-on-hover",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteTransactionCategory(
+                                      category.id
+                                    )
+                                  }
+                                }
+                              })
+                            ])
                           ])
                         }),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { attrs: { colspan: "99" } }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.categoryForm.expense,
+                                  expression: "categoryForm.expense"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Add a new expense category"
+                              },
+                              domProps: { value: _vm.categoryForm.expense },
+                              on: {
+                                keyup: function($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "enter",
+                                      13,
+                                      $event.key,
+                                      "Enter"
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.saveCategory("expense")
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.categoryForm,
+                                    "expense",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
                         _vm._v(" "),
                         _vm._l(10, function(x) {
                           return _vm.formCategories.length == 0
@@ -74309,16 +74487,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Cancel")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-fill btn-success",
-                  on: { click: _vm.saveTransaction }
-                },
-                [_vm._v("Save")]
+                [_vm._v("Back")]
               )
             ])
           ])
@@ -74332,7 +74501,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h3", [_vm._v("Add Transaction")])
+      _c("h4", [_vm._v("Add Transaction")])
     ])
   },
   function() {
@@ -74385,14 +74554,20 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h3", [_vm._v("Add Category")])
+      _c("h4", [_vm._v("Transaction Category")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [_c("tr", [_c("th", [_vm._v("Name")])])])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "50px" } }, [_vm._v(" ")])
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -74409,7 +74584,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [_c("tr", [_c("th", [_vm._v("Name")])])])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "50px" } }, [_vm._v(" ")])
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -74447,7 +74628,7 @@ var render = function() {
   return _c("div", { class: { "loading-opacity": _vm.isLoading } }, [
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
-        _c("h3", [_vm._v("All Transactions")]),
+        _c("h4", [_vm._v("All Transactions")]),
         _vm._v(" "),
         _vm.paginatedData
           ? _c("span", [
@@ -91752,6 +91933,16 @@ Vue.prototype.$apiRoutes = {
     title: "Get Recent Transaction",
     description: "Fetches a user's recent (last 5) transactions",
     url: Vue.prototype.$baseAPI + '/transactions/recent'
+  },
+  "addTransactionCategory": {
+    title: "Add Transaction Category",
+    description: "Adds a new transaction category",
+    url: Vue.prototype.$baseAPI + '/transactions/category/save'
+  },
+  "deleteTransactionCategory": {
+    title: "Delete Transaction Category",
+    description: "Delete a transaction category",
+    url: Vue.prototype.$baseAPI + '/transactions/category/'
   }
 };
 Vue.prototype.$transactionTypeList = {
@@ -92003,14 +92194,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************************!*\
   !*** ./resources/js/components/transactions/transactions-add.vue ***!
   \*******************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _transactions_add_vue_vue_type_template_id_2a8a89e8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./transactions-add.vue?vue&type=template&id=2a8a89e8& */ "./resources/js/components/transactions/transactions-add.vue?vue&type=template&id=2a8a89e8&");
 /* harmony import */ var _transactions_add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./transactions-add.vue?vue&type=script&lang=js& */ "./resources/js/components/transactions/transactions-add.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _transactions_add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _transactions_add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -92040,7 +92232,7 @@ component.options.__file = "resources/js/components/transactions/transactions-ad
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/transactions/transactions-add.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

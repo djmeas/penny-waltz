@@ -3,7 +3,7 @@
 		<!-- All Transactions -->
 		<div class="card">
 			<div class="card-header">
-				<h3>All Transactions</h3>
+				<h4>All Transactions</h4>
 				<span v-if="paginatedData">
 					Displaying {{paginatedData.from}} - {{paginatedData.to}} of {{paginatedData.total}}
 					<span class="card-header-subheader">Page {{paginatedData.current_page}}</span>

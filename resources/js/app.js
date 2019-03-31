@@ -62,8 +62,17 @@ Vue.prototype.$apiRoutes = {
 		title: "Get Recent Transaction",
 		description: "Fetches a user's recent (last 5) transactions",
 		url: Vue.prototype.$baseAPI + '/transactions/recent'
+	},
+	"addTransactionCategory": {
+		title: "Add Transaction Category",
+		description: "Adds a new transaction category",
+		url: Vue.prototype.$baseAPI + '/transactions/category/save'
+	},
+	"deleteTransactionCategory": {
+		title: "Delete Transaction Category",
+		description: "Delete a transaction category",
+		url: Vue.prototype.$baseAPI + '/transactions/category/'
 	}
-
 }; 
 
 Vue.prototype.$transactionTypeList = {

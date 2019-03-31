@@ -1,12 +1,32 @@
 /* Custom Styles */
 
+.card .card-header:not([data-background-color]), .card .card-header {
+    background-color: #33364a;
+    padding: 18px 20px 13px;
+}
+
 /** Fonts **/
+h3, h4 {
+	margin-bottom: 7px;
+}
 
 .fa-small {
 	font-size: .5em;
 }
 
 /** Effects **/
+.clickable:hover {
+	cursor: pointer;
+}
+
+.show-on-hover {
+	display: none;
+}
+
+.hidden-children:hover .show-on-hover {
+	display: inherit;
+}
+
 .faded {
 	opacity: .3 !important;
 }
@@ -134,11 +154,11 @@ textarea.form-control {
 #table-transactions-all {
 
 	.date, .type {
-		width: 150px;
+		width: 120px;
 	}
 
 	.category {
-		width: 200px;
+		width: 180px;
 	}
 
 	.short-description {
