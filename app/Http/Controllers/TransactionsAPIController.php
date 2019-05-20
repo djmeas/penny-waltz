@@ -96,11 +96,23 @@ class TransactionsAPIController extends Controller
     public function deleteTransactionCategory($category_id) {
 
         try {
+
+            // Note: Only delete the category if it isn't being used.
             
-            $transactionCategory = UserTransactionCategory::where('id', $category_id)
+            $transactions = Transaction::where('category_id', $category_id)->first();
+
+            if(!$transactions) {
+
+                $transactionCategory = UserTransactionCategory::where('id', $category_id)
                 ->where('user_id', Auth::user()->id)->delete();   
 
-            return response(['message' => 'Your category has been deleted.'], 200);
+                return response(['message' => 'Your category has been deleted.'], 200);
+
+            } else {
+
+                return response(['message' => 'Cannot delete a category that has assocaited transactions.'], 400);
+
+            }
 
         } catch (\Exception $e) {
             

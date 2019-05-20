@@ -142,7 +142,8 @@
                     this.getUserTransactionCategories();
                     this._initForm();
                 }).catch(error => {
-                    Vue.prototype.$flashMessage(error.data.message, 'error');
+                    console.log(error); 
+                    Vue.prototype.$flashMessage(error.response.data.message, 'error');
                 });
 
             },

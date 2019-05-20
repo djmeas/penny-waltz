@@ -2353,7 +2353,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this3._initForm();
       }).catch(function (error) {
-        Vue.prototype.$flashMessage(error.data.message, 'error');
+        console.log(error);
+        Vue.prototype.$flashMessage(error.response.data.message, 'error');
       });
     },
     // Helpers
